@@ -1,0 +1,15 @@
+app.movie-web.server.port=9095
+app.movie-web.spring.cloud.stream.bindings.output.destination=movie
+app.splitter.expression=#jsonPath(payload,'$.MovieRequest.movies')
+app.splitter.spring.cloud.stream.bindings.input.destination=movie
+app.splitter.spring.cloud.stream.bindings.output.destination=imdb
+app.groovy-transform.script=https://raw.githubusercontent.com/felipeg48/scdf-scripts/master/movie-transform.groovy
+app.groovy-transform.spring.cloud.stream.bindings.input.destination=imdb
+app.groovy-transform.spring.cloud.stream.bindings.output.destination=transform
+app.jdbc.columns=id:id,title:title,actor:actor,year:year,genre:genre,stars:stars,rating:imdb.rating,ratingcount:imdb.ratingCount
+app.jdbc.table-name=movies
+app.jdbc.password=rootpw
+app.jdbc.driver-class-name=org.mariadb.jdbc.Driver
+app.jdbc.username=root
+app.jdbc.url=jdbc:mysql://mysql:3306/reviews?autoReconnect=true&useSSL=false
+app.jdbc.spring.cloud.stream.bindings.input.destination=transform

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-http="http://www.springframework.org/schema/integration/http"
+       xmlns:int-mail="http://www.springframework.org/schema/integration/mail"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/integration/jdbc http://www.springframework.org/schema/integration/jdbc/spring-integration-jdbc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+        http://www.springframework.org/schema/integration/mail http://www.springframework.org/schema/integration/mail/spring-integration-mail.xsd
+        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+    <!-- Spring Integration -->
+    <!-- Spring Integration: Http -->
+    <int-http:inbound-channel-adapter id="movie"
+                                      supported-methods="POST" channel="input" path="/v2/movie"
+                                      request-payload-type="com.apress.integration.movieweb.Movie"
+                                      status-code-expression="T(org.springframework.http.HttpStatus).ACCEPTED"
+    />
+
+    <int-http:inbound-channel-adapter id="movies"
+                                      supported-methods="POST" channel="input" path="/v2/movies"
+                                      request-payload-type="com.apress.integration.movieweb.Movie[]"
+                                      status-code-expression="T(org.springframework.http.HttpStatus).ACCEPTED"
+    />
+
+    <!-- Spring Integration: Execution Channel -->
+    <int:channel id="input"/>
+
+    <!-- Spring Integration: JDBC -->
+    <int-jdbc:outbound-channel-adapter
+            query="insert into movies (title, actor, year) values ( :payload.title, :payload.actor, :payload.year)"
+            data-source="dataSource" channel="input" />
+
+
+</beans>

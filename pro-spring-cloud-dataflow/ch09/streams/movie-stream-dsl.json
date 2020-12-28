@@ -1,0 +1,29 @@
+{
+  "date": 1589495415666,
+  "streams": [
+    {
+      "force": false,
+      "name": "imdb-high-rating",
+      "dslText": ":movie.groovy-transform > filter --expression=\"#jsonPath(payload,'$.imdb.rating') > 8.0\" | log",
+      "originalDslText": ":movie.groovy-transform > filter --expression=\"#jsonPath(payload,'$.imdb.rating') > 8.0\" | log",
+      "description": "",
+      "status": "undeployed"
+    },
+    {
+      "force": false,
+      "name": "movie",
+      "dslText": "http --port=9001 | splitter --expression=\"#jsonPath(payload, '$.movies')\" | groovy-transform --script=https://raw.githubusercontent.com/felipeg48/scdf-scripts/master/movie-transform.groovy | jdbc --password='rootpw' --columns=id:id,title:title,actor:actor,year:year,genre:genre,stars:stars,rating:imdb.rating,ratingcount:imdb.ratingCount --table-name=movies --driver-class-name=org.mariadb.jdbc.Driver --url='jdbc:mysql://mysql:3306/reviews?autoReconnect=true&useSSL=false' --username='root'",
+      "originalDslText": "http --port=9001 | splitter --expression=\"#jsonPath(payload, '$.movies')\" | groovy-transform --script=https://raw.githubusercontent.com/felipeg48/scdf-scripts/master/movie-transform.groovy | jdbc --password='rootpw' --columns=id:id,title:title,actor:actor,year:year,genre:genre,stars:stars,rating:imdb.rating,ratingcount:imdb.ratingCount --table-name=movies --driver-class-name=org.mariadb.jdbc.Driver --url='jdbc:mysql://mysql:3306/reviews?autoReconnect=true&useSSL=false' --username='root'",
+      "description": "",
+      "status": "undeployed"
+    },
+    {
+      "force": false,
+      "name": "stars",
+      "dslText": ":movie.splitter > filter --expression=\"#jsonPath(payload,'$.stars') > 3\" | log",
+      "originalDslText": ":movie.splitter > filter --expression=\"#jsonPath(payload,'$.stars') > 3\" | log",
+      "description": "",
+      "status": "undeployed"
+    }
+  ]
+}

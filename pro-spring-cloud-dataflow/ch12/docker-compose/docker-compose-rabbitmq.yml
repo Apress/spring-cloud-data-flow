@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7.25
+    container_name: dataflow-mysql
+    environment:
+      MYSQL_DATABASE: dataflow
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: rootpw
+    expose:
+      - 3306
+
+  nats:
+    image: nats
+    container_name: nats
+    expose:
+      - 4222
+      - 6222
+      - 8222
+
+  rabbitmq:
+    image: rabbitmq:3.8.3-management-alpine
+    container_name: dataflow-rabbitmq
+    ports:
+      - "15672:15672"
+    expose:
+      - 5672
+ 
+  dataflow-server:
+    image: springcloud/spring-cloud-dataflow-server:${DATAFLOW_VERSION:?DATAFLOW_VERSION variable needs to be set!}
+    container_name: dataflow-server
+    ports:
+      - "9393:9393"
+    environment:
+      - spring.cloud.dataflow.applicationProperties.stream.spring.rabbitmq.host=rabbitmq
+      - spring.cloud.skipper.client.serverUri=http://skipper-server:7577/api
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/dataflow
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpw
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
+      - maven.remote-repositories.repo1.url=https://dl.bintray.com/felipeg48/scdf
+      - dropbox.api-key=YOUR-TOKEN
+    depends_on:
+      - rabbitmq
+    entrypoint: "./wait-for-it.sh mysql:3306 -- java -jar /maven/spring-cloud-dataflow-server.jar"
+    volumes:
+      - ${HOST_MOUNT_PATH:-.}:${DOCKER_MOUNT_PATH:-/root/scdf}
+ 
+  skipper-server:
+    image: springcloud/spring-cloud-skipper-server:${SKIPPER_VERSION:?SKIPPER_VERSION variable needs to be set!}
+    container_name: skipper
+    ports:
+      - "7577:7577"
+      - "20000-20105:20000-20105"
+      - "9095:9095"
+    environment:
+      - maven.remote-repositories.repo1.url=https://dl.bintray.com/felipeg48/scdf
+    volumes:
+      - ${HOST_MOUNT_PATH:-.}:${DOCKER_MOUNT_PATH:-/root/scdf}

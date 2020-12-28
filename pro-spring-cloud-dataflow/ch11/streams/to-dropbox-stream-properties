@@ -1,0 +1,10 @@
+app.movie-details.movie.batch-uri=maven://com.apress.cloud.batch:movie-batch:0.0.1
+app.movie-details.movie.header-key=YOUR-KEY
+app.movie-details.movie.task-name=movie-dropbox-batch
+app.movie-details.movie.dropbox.token=YOUR-TOKEN
+app.movie-details.movie.dropbox.path=/IMDB/
+app.movie-details.movie.dropbox.local-tmp-folder=/tmp/
+app.movie-details.spring.cloud.stream.bindings.input.destination=imdb
+app.movie-details.spring.cloud.stream.bindings.output.destination=task
+app.task-launcher-dataflow.spring.cloud.stream.bindings.input.destination=task
+app.task-launcher-dataflow.spring.cloud.dataflow.client.server-uri=http://dataflow-server:9393

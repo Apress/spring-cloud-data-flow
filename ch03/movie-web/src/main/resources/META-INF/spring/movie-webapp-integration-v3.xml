@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-http="http://www.springframework.org/schema/integration/http"
+       xmlns:int-mail="http://www.springframework.org/schema/integration/mail"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/integration/jdbc http://www.springframework.org/schema/integration/jdbc/spring-integration-jdbc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+        http://www.springframework.org/schema/integration/mail http://www.springframework.org/schema/integration/mail/spring-integration-mail.xsd
+        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+    <!-- Spring Integration -->
+    <!-- Spring Integration: Http -->
+    <int-http:inbound-channel-adapter id="movie"
+                                      supported-methods="POST" channel="publisher" path="/v2/movie"
+                                      request-payload-type="com.apress.integration.movieweb.Movie"
+                                      status-code-expression="T(org.springframework.http.HttpStatus).ACCEPTED"
+    />
+
+    <int-http:inbound-channel-adapter id="movies"
+                                      supported-methods="POST" channel="publisher" path="/v2/movies"
+                                      request-payload-type="com.apress.integration.movieweb.Movie[]"
+                                      status-code-expression="T(org.springframework.http.HttpStatus).ACCEPTED"
+    />
+
+    <!-- Publish/Subscribe Channel -->
+    <int:publish-subscribe-channel id="publisher" />
+
+    <!-- Spring Integration: JDBC -->
+    <int-jdbc:outbound-channel-adapter id="jdbc"
+                                       query="insert into movies (title, actor, year) values ( :payload.title, :payload.actor, :payload.year)"
+                                       data-source="dataSource" channel="publisher" order="1"  />
+
+    <!-- Spring Integration: Mail -->
+    <int-mail:outbound-channel-adapter channel="mail" mail-sender="mailSender" />
+    <int:service-activator input-channel="publisher" output-channel="mail" ref="movieMailEndpoint" order="2" />
+
+
+    <int:channel id="mail">
+        <int:dispatcher task-executor="taskExecutor"/>
+    </int:channel>
+
+
+
+    <!-- Mail Properties -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${email.host}" />
+        <property name="port" value="${email.port}" />
+        <property name="username" value="${email.account.name}" />
+        <property name="password" value="${email.account.password}" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.auth">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Helpers -->
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="5" />
+        <property name="maxPoolSize" value="10" />
+        <property name="queueCapacity" value="25" />
+    </bean>
+
+    <!-- JSON Converter -->
+    <bean id="jsonConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes" value="application/json" />
+    </bean>
+
+</beans>

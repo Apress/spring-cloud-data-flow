@@ -1,0 +1,55 @@
+version: '3'
+services:
+  rabbit:
+    image: "rabbitmq:3.8.3-management-alpine"
+    container_name: rabbit    
+    networks:
+      - app-starters
+
+  http:
+    image: "springcloudstream/http-source-rabbit:2.1.4.RELEASE"
+    container_name: http
+    environment:
+      - spring.cloud.stream.bindings.output.destination=http
+      - spring.rabbitmq.host=rabbit
+    ports:
+      - "8080:8080"
+    networks:
+      - app-starters
+
+  filter:
+    image: "springcloudstream/filter-processor-rabbit:2.1.3.RELEASE"
+    container_name: filter
+    environment:
+      - spring.cloud.stream.bindings.input.destination=http
+      - spring.cloud.stream.bindings.output.destination=transform
+      - spring.rabbitmq.host=rabbit
+      - filter.expression=#jsonPath(payload,'$$.msg').contains('Hello')
+    networks:
+      - app-starters
+  
+  transform:
+    image: "springcloudstream/groovy-transform-processor-rabbit:2.1.3.RELEASE"
+    container_name: transform
+    environment:
+      - spring.cloud.stream.bindings.input.destination=transform
+      - spring.cloud.stream.bindings.output.destination=log
+      - spring.rabbitmq.host=rabbit
+      - groovy-transformer.script=file:///mnt/transform.groovy
+    volumes:
+      - "$PWD/:/mnt"
+    networks:
+      - app-starters
+
+  log:
+    image: "springcloudstream/log-sink-rabbit:2.1.4.RELEASE"
+    container_name: log
+    environment:
+      - spring.cloud.stream.bindings.input.destination=log
+      - spring.rabbitmq.host=rabbit
+    networks:
+      - app-starters
+  
+
+networks:
+  app-starters:

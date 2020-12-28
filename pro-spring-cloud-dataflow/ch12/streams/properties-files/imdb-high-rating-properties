@@ -1,0 +1,4 @@
+app.filter.expression="#jsonPath(payload,'$.stars') > 3"
+app.filter.spring.cloud.stream.bindings.input.destination=transform
+app.filter.spring.cloud.stream.bindings.output.destination=log
+app.log.spring.cloud.stream.bindings.input.destination=log

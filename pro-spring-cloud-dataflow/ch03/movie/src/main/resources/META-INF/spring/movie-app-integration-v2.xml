@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int-file="http://www.springframework.org/schema/integration/file"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-http="http://www.springframework.org/schema/integration/http"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+        http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+    <!-- Spring Integration -->
+    <int-file:inbound-channel-adapter channel="input" directory="target/input" filename-pattern="*.txt">
+        <int:poller fixed-rate="500"/>
+    </int-file:inbound-channel-adapter>
+
+    <!-- Spring Integration: Direct Channel -->
+    <int:channel id="input"/>
+
+    <!-- Spring Integration: Service Activator -->
+    <int:service-activator id="movieProcessor" input-channel="input" ref="movieEndpoint" output-channel="output"/>
+
+    <!-- Spring Integration: Direct Channel -->
+    <int:channel id="output"/>
+
+    <!--  Spring Integration: File -->
+    <int-file:outbound-channel-adapter channel="output" directory="target/output"  filename-generator-expression="headers['name'] + '.processed'" />
+
+</beans>

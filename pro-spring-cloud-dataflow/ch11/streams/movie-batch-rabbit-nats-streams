@@ -1,0 +1,16 @@
+source.http=maven://org.springframework.cloud.stream.app:http-source-rabbit:2.1.2.RELEASE
+source.http.metadata=maven://org.springframework.cloud.stream.app:http-source-rabbit:jar:metadata:2.1.2.RELEASE
+source.movie-web=maven://com.apress.cloud.stream:movie-source:0.0.1
+processor.movie-imdb=maven://com.apress.cloud.stream:movie-processor:0.0.1
+processor.movie-imdb.metadata=maven://com.apress.cloud.stream:movie-processor:jar:metadata:0.0.1
+processor.movie-details=maven://com.apress.cloud.stream:movie-details:0.0.1
+processor.movie-details.metadata=maven://com.apress.cloud.stream:movie-details:jar:metadata:0.0.1
+processor.splitter=maven://org.springframework.cloud.stream.app:splitter-processor-rabbit:2.1.2.RELEASE
+processor.splitter.metadata=maven://org.springframework.cloud.stream.app:splitter-processor-rabbit:jar:metadata:2.1.2.RELEASE
+sink.movie-log=maven://com.apress.cloud.stream:movie-sink:0.0.1
+sink.task-launcher-dataflow=maven://org.springframework.cloud.stream.app:task-launcher-dataflow-sink-rabbit:1.1.0.RELEASE
+sink.task-launcher-dataflow.metadata=maven://org.springframework.cloud.stream.app:task-launcher-dataflow-sink-rabbit:jar:metadata:1.1.0.RELEASE
+sink.log=maven://org.springframework.cloud.stream.app:log-sink-rabbit:2.1.3.RELEASE
+sink.log.metadata=maven://org.springframework.cloud.stream.app:log-sink-rabbit:jar:metadata:2.1.3.RELEASE
+task.movie-batch=maven://com.apress.cloud.batch:movie-batch:0.0.1
+task.movie-batch.metadata=maven://com.apress.cloud.batch:movie-batch:jar:metadata:0.0.1

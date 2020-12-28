@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  nats:
+    image: 'nats:latest'
+    container_name: nats
+    ports:
+      - '4222:4222'
+      - '8222:8222'
+
+  rabbit:
+    image: 'rabbitmq:3.8.3-management-alpine'
+    container_name: rabbit
+    ports:
+      - '15672:15672'
+      - '5672:5672'

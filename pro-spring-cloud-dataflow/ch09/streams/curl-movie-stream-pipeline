@@ -1,0 +1,62 @@
+## Stream Creation
+curl -s -X POST \
+ --form 'name=movie' \
+ --form 'definition=movie=http --port=9001 | splitter --expression="#jsonPath(payload,'\''$.movies'\'')" | groovy-transform --script=https://raw.githubusercontent.com/felipeg48/scdf-scripts/master/movie-transform.groovy | jdbc --columns=id:id,title:title,actor:actor,year:year,genre:genre,stars:stars,rating:imdb.rating,ratingcount:imdb.ratingCount --table-name=movies --password=rootpw --driver-class-name=org.mariadb.jdbc.Driver --username=root --url=jdbc:mysql://mysql:3306/reviews?autoReconnect=true&useSSL=false' \
+ localhost:9393/streams/definitions | jq .
+
+
+curl -s -X POST \
+--form 'name=stars' \
+--form 'definition=stars= :movie.splitter > filter --expression="#jsonPath(payload,'\''$.stars'\'') > 3" | log' \
+http://localhost:9393/streams/definitions | jq .
+
+
+curl -s -X POST \
+--form 'name=imdb-high-rating' \
+--form 'definition=imdb-high-rating= :movie.groovy-transform > filter --expression="#jsonPath(payload,'\''$.imdb.rating'\'') > 8.0" | log' \
+http://localhost:9393/streams/definitions | jq .
+
+
+## Definitions
+curl -s -X GET \
+http://localhost:9393/streams/definitions | jq .
+
+
+## Deployment
+curl -s -X POST \
+http://localhost:9393/streams/deployments/movie | jq .
+
+curl -s -X POST \
+http://localhost:9393/streams/deployments/stars | jq .
+
+curl -s -X POST \
+http://localhost:9393/streams/deployments/imdb-high-rating | jq .
+
+
+## Posting Movies Set
+curl -s -X POST \
+-H "Content-Type: application/json" \
+-d '{"movies":[{"id":"tt0133093","title":"The Matrix","actor":"Keanu Reeves","year":1999,"genre":"fiction","stars":5},{"id":"tt0209144","title":"Memento","actor":"Guy Pearce","year":2000,"genre":"drama","stars":4},{"id":"tt0482571","title": "The Prestige","actor":"Christian Bale","year":2006,"genre":"drama","stars":3},{"id":"tt0486822","title":"Disturbia","actor":"Shia LaBeouf","year":2007,"genre":"drama","stars":3}]}' \
+http://localhost:9001
+
+
+
+## If using Docker Compose
+docker exec skipper \
+ curl -s -X POST \
+ -H "Content-Type: application/json" \
+-d '{"movies":[{"id":"tt0133093","title":"The Matrix","actor":"Keanu Reeves","year":1999,"genre":"fiction","stars":5},{"id":"tt0209144","title":"Memento","actor":"Guy Pearce","year":2000,"genre":"drama","stars":4},{"id":"tt0482571","title": "The Prestige","actor":"Christian Bale","year":2006,"genre":"drama","stars":3},{"id":"tt0486822","title":"Disturbia","actor":"Shia LaBeouf","year":2007,"genre":"drama","stars":3}]}' \
+http://localhost:9001 | jq .
+
+
+## Undeploy all Deployments
+curl -s -X DELETE \
+http://localhost:9393/streams/deployments | jq .
+
+
+## Delete all Streams
+curl -s -X DELETE \
+http://localhost:9393/streams/definitions | jq .
+
+
+

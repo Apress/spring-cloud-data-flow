@@ -1,0 +1,5 @@
+--dropbox.api-key=0K7QS43AE1QAAAAAAABOW0-mJv0Z1TBN6KmzORy-G3a8htM-tudCpUoHTiOId_JB
+--movie.datasource.url=jdbc:mysql://mysql:3306/movies?useSSL=false&requireSSL=false
+--movie.datasource.driverClassName=org.mariadb.jdbc.Driver
+--movie.datasource.username=root
+--movie.datasource.password=rootpw

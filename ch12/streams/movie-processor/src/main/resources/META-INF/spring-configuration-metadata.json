@@ -1,0 +1,51 @@
+{
+  "groups": [
+    {
+      "name": "movie",
+      "type": "com.apress.cloud.stream.movie.MovieProperties",
+      "sourceType": "com.apress.cloud.stream.movie.MovieProperties"
+    },
+    {
+      "name": "spring.nats",
+      "type": "com.apress.nats.NatsProperties",
+      "sourceType": "com.apress.nats.NatsProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "spring.nats.host",
+      "type": "java.lang.String",
+      "description": "This NATs Server host. Default to localhost.",
+      "sourceType": "com.apress.nats.NatsProperties",
+      "defaultValue": "localhost"
+    },
+    {
+      "name": "spring.nats.port",
+      "type": "java.lang.Integer",
+      "description": "This NATs Server port. Default to 4222.",
+      "sourceType": "com.apress.nats.NatsProperties",
+      "defaultValue": 4222
+    },
+    {
+      "name": "movie.api-server",
+      "type": "java.lang.String",
+      "description": "Default to: https://imdb8.p.rapidapi.com/title/get-ratings?tconst=ID. The ID will be replaced, so it's necessary",
+      "sourceType": "com.apress.cloud.stream.movie.MovieProperties",
+      "defaultValue": "https://imdb8.p.rapidapi.com/title/get-ratings?tconst=ID"
+    },
+    {
+      "name": "movie.header-host",
+      "type": "java.lang.String",
+      "description": "Default to: imdb8.p.rapidapi.com.",
+      "sourceType": "com.apress.cloud.stream.movie.MovieProperties",
+      "defaultValue": "imdb8.p.rapidapi.com"
+    },
+    {
+      "name": "movie.header-key",
+      "type": "java.lang.String",
+      "description": "This header-key can be obtain in your https://rapidapi.com/ profile.",
+      "sourceType": "com.apress.cloud.stream.movie.MovieProperties"
+    }
+  ],
+  "hints": []
+}

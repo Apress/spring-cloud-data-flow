@@ -1,0 +1,24 @@
+{"properties": [
+  {
+    "name": "dropbox.api-key",
+    "description": "This is the DropBox API and MUST be set. You can get this key in the dropbox.com/developers.",
+    "sourceType": "com.apress.cloud.task.ImageToDropboxProperties"
+  },
+  {
+    "name": "dropbox.path",
+    "description": "The path wherwe the file will be upload.",
+    "defaultValue": "/IMDB/",
+    "sourceType": "com.apress.cloud.task.ImageToDropboxProperties"
+  },
+  {
+    "name": "dropbox.local-tmp-folder",
+    "description": "The local Temp file where the file will be pickup and uploaded.",
+    "defaultValue": "/tmp/",
+    "sourceType": "com.apress.cloud.task.ImageToDropboxProperties"
+  }
+], "hints":  [
+  {
+    "name": "dropbox.api-key",
+    "description": "This is the DropBox API and MUST be set. You can get this key in the dropbox.com/developers."
+  }
+]}

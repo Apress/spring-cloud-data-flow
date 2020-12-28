@@ -1,0 +1,55 @@
+## Yaml Properties
+## Programming Model 3.x
+# Binders
+#spring:
+#  cloud:
+#    stream:
+#      bindings:
+#        onlyDrama-in-0:
+#          binder: nats
+#          destination: movie
+#        onlyDrama-out-0:
+#          binder: rabbit
+#          destination: log
+
+
+## With Spring Integration
+## Programming Model 2.x
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          binder: nats
+          destination: movie
+        output:
+          binder: rabbit
+          destination: log
+
+
+## Logging Level
+logging:
+  level:
+    com:
+      apress: DEBUG
+    org:
+      springframework:
+        cloud:
+          stream:
+            messaging:
+              DirectWithAttributesChannel: DEBUG
+
+
+
+## This is with application.properties and Function
+## Multiple Binders
+#spring.cloud.stream.bindings.onlyDrama-in-0.binder=nats
+#spring.cloud.stream.bindings.onlyDrama-out-0.binder=rabbit
+#
+## Bindings - Nats - RabbitMQ
+#spring.cloud.stream.bindings.onlyDrama-in-0.destination=movie
+#spring.cloud.stream.bindings.onlyDrama-out-0.destination=log
+#
+## Logging
+#logging.level.com.apress=DEBUG
+#logging.level.org.springframework.cloud.stream.messaging.DirectWithAttributesChannel=DEBUG

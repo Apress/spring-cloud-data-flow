@@ -1,0 +1,8 @@
+app.movie-imdb.spring.cloud.stream.bindings.input.binder=rabbit
+app.movie-imdb.spring.cloud.stream.bindings.output.binder=nats
+app.movie-imdb.spring.cloud.stream.bindings.input.destination=imdb
+app.movie-imdb.spring.cloud.stream.bindings.output.destination=movie-log
+app.movie-imdb.movie.header-key=YOUR_KEY
+app.movie-imdb.spring.nats.host=nats
+app.movie-log.spring.cloud.stream.bindings.input.destination=movie-log
+app.movie-log.spring.nats.host=nats

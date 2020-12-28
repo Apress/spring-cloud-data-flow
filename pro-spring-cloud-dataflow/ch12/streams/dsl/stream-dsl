@@ -1,0 +1,4 @@
+movie=movie-web | splitter | groovy-transform | jdbc
+imdb-high-rating=:movie.groovy-transform > filter | log
+stars=:movie.splitter > movie-imdb | movie-log
+to-dropbox= :movie.splitter > movie-details | task-launcher-dataflow

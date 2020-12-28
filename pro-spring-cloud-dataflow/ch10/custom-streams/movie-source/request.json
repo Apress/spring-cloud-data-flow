@@ -1,0 +1,23 @@
+{
+  "MovieRequest": {
+    "action": "create",
+    "movies": [
+      {
+        "id": "tt0133093",
+        "title": "The Matrix",
+        "actor": "Keanu Reeves",
+        "year": 1999,
+        "genre": "fiction",
+        "stars": 5
+      },
+      {
+        "id": "tt0209144",
+        "title": "Memento",
+        "actor": "Guy Pearce",
+        "year": 2000,
+        "genre": "drama",
+        "stars": 4
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+source.movie-web=maven://com.apress.cloud.stream:movie-source:0.0.1
+processor.movie-imdb=maven://com.apress.cloud.stream:movie-processor:0.0.1
+processor.movie-imdb.metadata=maven://com.apress.cloud.stream:movie-processor:jar:metadata:0.0.1
+processor.splitter=maven://org.springframework.cloud.stream.app:splitter-processor-rabbit:2.1.2.RELEASE
+processor.splitter.metadata=maven://org.springframework.cloud.stream.app:splitter-processor-rabbit:jar:metadata:2.1.2.RELEASE
+sink.movie-log=maven://com.apress.cloud.stream:movie-sink:0.0.1

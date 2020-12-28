@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.apress.nats</groupId>
+		<artifactId>nats-binder</artifactId>
+		<version>0.0.1</version>
+		<relativePath>..</relativePath><!-- lookup parent from repository -->
+	</parent>
+
+	<packaging>jar</packaging>
+
+
+	<groupId>com.apress.nats</groupId>
+	<artifactId>nats-messaging</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>nats-messaging</name>
+	<description>Demo project for Spring Boot</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.nats</groupId>
+			<artifactId>jnats</artifactId>
+			<version>2.6.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

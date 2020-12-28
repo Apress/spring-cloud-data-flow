@@ -1,0 +1,6 @@
+task.timestamp=maven://org.springframework.cloud.task.app:timestamp-task:2.1.1.RELEASE
+task.timestamp.metadata=maven://org.springframework.cloud.task.app:timestamp-task:jar:metadata:2.1.1.RELEASE
+task.composed-task-runner=maven://org.springframework.cloud.task.app:composedtaskrunner-task:2.1.4.RELEASE
+task.composed-task-runner.metadata=maven://org.springframework.cloud.task.app:composedtaskrunner-task:jar:metadata:2.1.4.RELEASE
+task.timestamp-batch=maven://org.springframework.cloud.task.app:timestamp-batch-task:2.1.1.RELEASE
+task.timestamp-batch.metadata=maven://org.springframework.cloud.task.app:timestamp-batch-task:jar:metadata:2.1.1.RELEASE

@@ -1,0 +1,48 @@
+{
+  "properties": [
+    {
+      "name": "movie.api-server",
+      "type": "java.lang.String",
+      "description": "Default to: https://imdb8.p.rapidapi.com/title/get-details?tconst=ID. The ID will be replaced, so it's necessary.",
+      "sourceType": "com.apress.cloud.stream.movie.MovieProperties",
+      "defaultValue": "https://imdb8.p.rapidapi.com/title/get-details?tconst=ID"
+    },
+    {
+      "name": "movie.header-host",
+      "type": "java.lang.String",
+      "description": "Default to: imdb8.p.rapidapi.com.",
+      "sourceType": "com.apress.cloud.stream.movie.MovieProperties",
+      "defaultValue": "imdb8.p.rapidapi.com"
+    },
+    {
+      "name": "movie.header-key",
+      "type": "java.lang.String",
+      "description": "This header-key can be obtain in your https://rapidapi.com/ profile.",
+      "sourceType": "com.apress.cloud.stream.movie.MovieProperties"
+    },
+    {
+      "name": "movie.task-name",
+      "type": "java.lang.String",
+      "description": "The name of the Task created in Data Flow.",
+      "sourceType": "com.apress.cloud.stream.movie.MovieProperties",
+      "defaultValue": "movieTaskName"
+    },
+    {
+      "name": "movie.dropbox.token",
+      "description": "This is the DropBox Token and MUST be set. You can get this token in the dropbox.com/developers.",
+      "sourceType": "com.apress.cloud.batch.dropbox.DropboxProperties"
+    },
+    {
+      "name": "movie.dropbox.path",
+      "description": "The path wherwe the file will be upload.",
+      "defaultValue": "/IMDB/",
+      "sourceType": "com.apress.cloud.batch.dropbox.DropboxProperties"
+    },
+    {
+      "name": "movie.dropbox.local-tmp-folder",
+      "description": "The local Temp file where the file will be pickup and uploaded.",
+      "defaultValue": "/tmp/",
+      "sourceType": "com.apress.cloud.batch.dropbox.DropboxProperties"
+    }
+  ]
+}

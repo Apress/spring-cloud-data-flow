@@ -1,0 +1,2 @@
+task.image-to-dropbox=maven://com.apress.cloud.task:image-to-dropbox:0.0.1
+task.image-to-dropbox.metadata=maven://com.apress.cloud.task:image-to-dropbox:jar:metadata:0.0.1
